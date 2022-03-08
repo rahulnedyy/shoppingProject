@@ -97,4 +97,21 @@ public static ArrayList<ProductPojo> getAllBooksProducts()throws SQLException{
         }
         return prodList;
    }
+  public static ArrayList<ProductPojo> findProduct(String name)throws SQLException{
+    ArrayList<ProductPojo> prodList=new ArrayList<>();
+        ProductPojo e=null;
+         PreparedStatement ps=DBConnection.getConnection().prepareStatement("select PRODUCTNAME,PRICE,SELLERINFO,DATE from PRODUCT where PRODUCTNAME=? OR TYPE=?");
+        ps.setString(1,name);
+        ResultSet rs=ps.executeQuery();
+        if(rs.next())
+        {
+            e=new ProductPojo();
+            e.setpname(rs.getString(1));
+            e.setprice(rs.getString(2));
+            e.setsellerInfo(rs.getString(3));
+            e.setdate(rs.getString(4));
+            prodList.add(e);
+        }
+        return prodList;
+    }
 }
